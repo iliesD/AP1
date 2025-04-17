@@ -1,0 +1,51 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{% endblock %}
+{% block stylesheets %}{% endblock %}
+{% block top %}
+    <div class="container">
+        <!-- titre -->
+        <div class="text-left">
+            <img src="{{ app.request.getBasePath()~'/banniere.jpg' }}" >
+        </div>
+        <!-- menu -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('accueil') }}"
+                          {% if app.request.attributes.get('_route') == 'accueil' %}style="font-weight: bold"{% endif %}>
+                          Accueil</a>
+                    </li>
+                    
+                    {% if is_granted('ROLE_ADMIN') %}
+                    {% else %}
+                        <li><a class="nav-link">|</a></li>
+                    {% endif %}
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('formations') }}"
+                          {% if app.request.attributes.get('_route') == 'formations' %}style="font-weight: bold"{% endif %}>
+                          Formations</a>
+                    </li>
+                    
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li><a class="nav-link">|</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('admin.formations') }}">
+                              Dashboard</a>
+                        </li>
+                    {% endif %}
+                </ul>
+                {% if app.user %}
+                    <span class="btn text-center">{{ app.user.username }}</span>
+                    <a class="btn btn-dark" href="{{ path('app_logout')}}">Déconnexion</a>
+                {% else %}
+                    <a class="btn btn-outline-primary" href="{{ path('app_login')}}">Connexion</a>
+                {% endif %}
+            </div>
+        </nav>        
+    </div>
+{% endblock %}
+{% block body %}{% endblock %}
+{% block javascripts %}{% endblock %}

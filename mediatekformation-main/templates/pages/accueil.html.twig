@@ -1,0 +1,45 @@
+{% extends "basefront.html.twig" %}
+{% block title %}Accueil — MediaTek86{% endblock %}
+
+{% block body %}
+    <p class="mt-3">
+        <h3>Bienvenue sur le site de MediaTek86 consacré aux formations</h3>
+    </p>
+    <p class="mt-3">
+        Vous allez pouvoir vous former à différents outils numériques gratuitement et directement en ligne.<br />
+        Dans la partie <a href="{{ path('formations') }}">Formations</a>, vous trouverez la liste des formations proposées. 
+        Vous pouvez faire une recherche à partir d'un mot, trier les formations sur le titre ou la date de parution et, 
+        en cliquant sur la miniature, vous accèderez à la présentation plus détaillée de la formation ainsi que la vidéo correspondante.
+    </p>
+    <p>
+        Voici les deux dernières formations ajoutées au catalogue :
+        <table>
+            <tr>
+                {% for formation in formations %}
+                    <td style="vertical-align: text-top; width: 50%">
+                        <div class="row mt-3 mr-3">
+                            <div class="col">
+                                <!-- emplacement photo -->
+                                <a href="{{ path('formations.showone', {id:formation.id}) }}">
+                                    <img class="card-img-top" style="width: 246px; height: 184px; object-fit: cover;"
+                                         src="{%if formation.picture %}{{ formation.picture }}
+                                         {% else %}https://artsmidnorthcoast.com/wp-content/uploads/2014/05/no-image-available-icon-6.png{% endif %}">
+                                </a>
+                            </div>
+                            <div class="col">
+                                <p>{{ formation.publishedatstring }}</p>
+                                <h4 class="text-info mt-1">
+                                    <a href="{{ path('formations.showone', {id:formation.id}) }}" style="text-decoration: none; color: inherit; ">
+                                        {{ formation.title }}
+                                    </a>
+                                </h4>
+                                <p>{{ formation.level }}</p>
+                            </div>    
+                        </div>                    
+                    </td>
+                {% endfor %}    
+            </tr>
+        </table>
+    </p>
+{% endblock %}
+
